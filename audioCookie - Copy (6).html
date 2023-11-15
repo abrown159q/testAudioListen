@@ -15,7 +15,7 @@
 <body>
 
     <h1>Audio Player</h1>
-	<h2>hooray me - I fixed gpt's problem of not saving the audio source</h2>
+
     <p id="currentAudio">Currently playing: </p>
 
     <audio id="audioPlayer" controls>
@@ -28,7 +28,7 @@
     <script>
         // JSON array of links to MP3 files
         var audioList = [
-         "https://www.archive.org/download/lordoftheworld_1104_librivox/lordoftheworld_00_benson.mp3" ,
+ "https://www.archive.org/download/lordoftheworld_1104_librivox/lordoftheworld_00_benson.mp3" ,
  "https://www.archive.org/download/lordoftheworld_1104_librivox/lordoftheworld_01_benson.mp3" ,
  "https://www.archive.org/download/lordoftheworld_1104_librivox/lordoftheworld_02_benson.mp3" ,
  "https://www.archive.org/download/lordoftheworld_1104_librivox/lordoftheworld_03_benson.mp3" ,
@@ -107,21 +107,10 @@
             var currentAudio = localStorage.getItem("currentAudio");
             return currentAudio ? currentAudio : "";
         }
-		
-		        // Function to get the currently playing audio file number from localStorage
-        function getCurrentAudioNumber() {
-            var currentAudioNumber = localStorage.getItem("currentAudioNumber");
-            return currentAudioNumber ? currentAudioNumber : 0;
-        }
 
         // Function to set the currently playing audio file in localStorage
         function setCurrentAudio(audio) {
             localStorage.setItem("currentAudio", audio);
-        }
-		
-		        // Function to set the currently playing audio number in localStorage
-        function setCurrentAudioNumber(number) {
-            localStorage.setItem("currentAudioNumber", number);
         }
 
         // Function to play the next audio in the list
@@ -137,7 +126,7 @@
                 currentAudio.textContent = "Currently playing: " + audioList[currentIndex + 1];
                 // Save the currently playing audio and playback position in localStorage
                 setCurrentAudio(audioList[currentIndex + 1]);
-                setPlaybackPosition(0); // Reset the playback position for the next audio
+                setPlaybackPosition(audioPlayer.currentTime);
             }
         }
 
@@ -154,7 +143,7 @@
                 currentAudio.textContent = "Currently playing: " + audioList[currentIndex - 1];
                 // Save the currently playing audio and playback position in localStorage
                 setCurrentAudio(audioList[currentIndex - 1]);
-                setPlaybackPosition(0); // Reset the playback position for the previous audio
+                setPlaybackPosition(audioPlayer.currentTime);
             }
         }
 
@@ -163,19 +152,12 @@
             var audioPlayer = document.getElementById("audioPlayer");
             // Save the playback position in localStorage whenever the time updates
             setPlaybackPosition(audioPlayer.currentTime);
-			
-			//???added current index
-			   var currentIndex = audioList.indexOf(audioPlayer.src);
-			   setCurrentAudioNumber(currentIndex);
-			   
         }
 
         // Set the initial playback position, audio source, and currently playing display when the page loads
         window.onload = function() {
             var audioPlayer = document.getElementById("audioPlayer");
             var currentAudio = document.getElementById("currentAudio");
-			var currentIndex = getCurrentAudioNumber();
-			audioPlayer.src = audioList[currentIndex];
             // Set the playback position from localStorage
             audioPlayer.currentTime = getPlaybackPosition();
 
@@ -186,9 +168,16 @@
                 // Update the currently playing display
                 currentAudio.textContent = "Currently playing: " + audioList[0];
                 // Save the currently playing audio and playback position in localStorage
-                setCurrentAudio(audioList[0]);
-                setPlaybackPosition(0); // Reset the playback position for the initial audio
-            }
+				
+            //    setCurrentAudio(audioList[0]);
+              //  setPlaybackPosition(audioPlayer.currentTime);
+            
+			    var currentIndex = audioList.indexOf(audioPlayer.src);
+				setCurrentAudio(audioList[currentIndex]);
+                setPlaybackPosition(audioPlayer.currentTime);
+           
+			
+			}
 
             // Add an event listener to handle the timeupdate event
             audioPlayer.addEventListener("timeupdate", handleTimeUpdate);
