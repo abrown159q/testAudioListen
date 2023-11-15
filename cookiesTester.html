@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Simple Page</h1>
+
+    <label for="nameInput">Enter your name:</label>
+    <input type="text" id="nameInput" placeholder="Your Name">
+
+    <button onclick="updateName()">Update Name</button>
+
+    <p id="displayName"></p>
+
+    <script>
+        // Function to update the name in the paragraph and store it in localStorage
+        function updateName() {
+            var nameInput = document.getElementById("nameInput");
+            var displayName = document.getElementById("displayName");
+
+            // Get the value from the input
+            var name = nameInput.value;
+
+            // Update the paragraph with the entered name
+            displayName.textContent = "Hello, " + name + "!";
+
+            // Store the name in localStorage
+            localStorage.setItem("userName", name);
+        }
+
+        // Check if there's a stored name in localStorage and display it
+        window.onload = function() {
+            var storedName = localStorage.getItem("userName");
+            if (storedName) {
+                var displayName = document.getElementById("displayName");
+                displayName.textContent = "Hello, " + storedName + "!";
+            }
+        };
+    </script>
+
+</body>
+</html>

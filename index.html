@@ -1,0 +1,34 @@
+<h1>Test audio and cookies</h1>
+
+<a href="cookiesTester.html"> cookies tester</a>
+<a href="audioCookie.html">audio cookie</a>
+
+<audio controls preload="auto" src="LordOfTheWorldPart1_librivox.m4b">
+</audio>
+<p>
+
+<h1>test</h1>
+<audio controls preload="auto" src="LordOfTheWorldPart2_librivox.m4b">
+
+</audio>
+
+<input id="local-input" onkeydown="store(this)">
+<button id="set-id" onclick="setId()">click here</button>
+<p id="myP">hello</p>
+<script>
+    // keep the contents of the input in local storage, called by input onkeydown
+    function store(e) {
+        localStorage.setItem('local', e.value)
+    }
+
+    // if previous storage exists, use it
+    if(localStorage.getItem('local') !== null) {
+        document.getElementById('local-input').value = localStorage.getItem('local')
+		
+        document.getElementById('myP').value = localStorage.getItem('local')
+    }
+	function setId() {
+	     document.getElementById('local-input').value = localStorage.getItem('local')
+	        document.getElementById('myP').value = localStorage.getItem('local')
+	}
+</script>

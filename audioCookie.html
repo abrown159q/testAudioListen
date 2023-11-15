@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Audio Player</h1>
+
+    <audio id="audioPlayer" controls>
+        <source src="LordOfTheWorldPart1_librivox.m4b">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        // Function to get the playback position from localStorage
+        function getPlaybackPosition() {
+            var position = localStorage.getItem("audioPosition");
+            return position ? parseFloat(position) : 0;
+        }
+
+        // Function to set the playback position in localStorage
+        function setPlaybackPosition(position) {
+            localStorage.setItem("audioPosition", position);
+        }
+
+        // Function to handle the timeupdate event of the audio element
+        function handleTimeUpdate() {
+            var audioPlayer = document.getElementById("audioPlayer");
+            // Save the playback position in localStorage whenever the time updates
+            setPlaybackPosition(audioPlayer.currentTime);
+        }
+
+        // Set the initial playback position when the page loads
+        window.onload = function() {
+            var audioPlayer = document.getElementById("audioPlayer");
+            // Set the playback position from localStorage
+            audioPlayer.currentTime = getPlaybackPosition();
+            // Add an event listener to handle the timeupdate event
+            audioPlayer.addEventListener("timeupdate", handleTimeUpdate);
+        };
+    </script>
+
+</body>
+</html>
